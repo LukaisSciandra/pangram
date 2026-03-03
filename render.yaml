@@ -2,8 +2,9 @@ services:
   - type: web
     name: pangram-solver
     env: static
+    buildCommand: ""
     staticPublishPath: .
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: public, max-age=86400
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

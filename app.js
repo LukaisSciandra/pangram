@@ -20,7 +20,7 @@ const wordGrid         = document.getElementById('word-grid');
 /* ── Load word list ────────────────────────────────────── */
 async function loadWords() {
   try {
-    const res  = await fetch('words.txt');
+    const res  = await fetch('/words.txt');
     const text = await res.text();
     wordList = text
       .split('\n')
