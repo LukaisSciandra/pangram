@@ -47,7 +47,7 @@ function isPangram(word, letterSet) {
 }
 
 function findPangrams(letters) {
-  const letterSet = new Set(letters.toLowerCase());
+  const letterSet = new Set(letters);
   return wordList.filter(w => isPangram(w, letterSet));
 }
 
