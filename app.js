@@ -7,9 +7,8 @@ let wordList = [];
 const boxes        = Array.from(document.querySelectorAll('.letter-box'));
 const btnSolve     = document.getElementById('btn-solve');
 const btnClear     = document.getElementById('btn-clear');
-const errorMsg     = document.getElementById('error-msg');
-const strictToggle = document.getElementById('strict-mode');
-const loadingEl    = document.getElementById('loading-overlay');
+const errorMsg  = document.getElementById('error-msg');
+const loadingEl = document.getElementById('loading-overlay');
 
 const resultsSection   = document.getElementById('results-section');
 const noResultsSection = document.getElementById('no-results-section');
@@ -35,26 +34,21 @@ async function loadWords() {
 }
 
 /* ── Pangram check ─────────────────────────────────────── */
-/**
- * Returns true when `word` is a pangram for the given letter set:
- *   - must contain every letter in `letterSet` at least once
- *   - if strict === true, may only contain letters from `letterSet`
- */
-function isPangram(word, letterSet, strict) {
+// A pangram must contain every letter in letterSet at least once
+// and may only contain letters from letterSet.
+function isPangram(word, letterSet) {
   for (const ch of letterSet) {
     if (!word.includes(ch)) return false;
   }
-  if (strict) {
-    for (const ch of word) {
-      if (!letterSet.has(ch)) return false;
-    }
+  for (const ch of word) {
+    if (!letterSet.has(ch)) return false;
   }
   return true;
 }
 
-function findPangrams(letters, strict) {
+function findPangrams(letters) {
   const letterSet = new Set(letters.toLowerCase());
-  return wordList.filter(w => isPangram(w, letterSet, strict));
+  return wordList.filter(w => isPangram(w, letterSet));
 }
 
 /* ── Input helpers ─────────────────────────────────────── */
@@ -193,8 +187,7 @@ btnSolve.addEventListener('click', () => {
   if (!validate()) return;
 
   const letters  = getLetters();
-  const strict   = strictToggle.checked;
-  const pangrams = findPangrams(letters, strict);
+  const pangrams = findPangrams(letters);
 
   renderResults(pangrams, letters);
 
